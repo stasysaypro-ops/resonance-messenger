@@ -1,4 +1,4 @@
-/* RESONANCE PM CHAT v14.5 — RusFF, 2026-10-07
+/* RESONANCE PM CHAT v14.6 — RusFF, 2026-10-07
  * Полный файл для замены прежней версии RESONANCE PM CHAT.
  * Подключение: внешний JavaScript либо содержимое между тегами script в HTML-низ.
  * Удалите прежнее подключение; не устанавливайте одновременно CF Messenger.
@@ -219,7 +219,11 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     function wysi() {
       var win = editorWindow();
       var api = win && win.WYSI;
-      try { return api && typeof api.isActive === 'function' && api.isActive() ? api : null; }
+      // A global WYSI object may belong to another, hidden form. CF also scopes
+      // the visual editor to its native form before reading its BBCode.
+      var form = textarea.closest('form');
+      var host = form && form.querySelector('#wysi-reply, [id*="wysi"], .wysibb, [class*="wysibb"]');
+      try { return api && host && (typeof api.isActive === 'function' ? api.isActive() : api.isActive === true) ? api : null; }
       catch (_) { return null; }
     }
     return {
@@ -227,7 +231,10 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         var api = wysi();
         if (api) {
           if (typeof api.getBBCode !== 'function') throw new Error('Визуальный редактор не позволяет прочитать BBCode. Переключись в текстовый режим.');
-          return String(api.getBBCode() || '');
+          var value = api.getBBCode();
+          // Some native editor versions synchronize the textarea and return
+          // nothing. Never turn that side effect into an empty outgoing text.
+          return typeof value === 'string' ? value : String(textarea.value || '');
         }
         return String(textarea.value || '');
       },
@@ -333,7 +340,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       var record = own || best; if (!record) return;
       state.draft = record.text; draftRevision = Number(record.revision) || 0;
       state.outgoing = (Array.isArray(record.operations) ? record.operations : []).filter(function (item) {
-        return item && typeof item.text === 'string' && Array.isArray(item.before) && /^(unknown|sent|failed)$/.test(item.status);
+        return item && typeof item.text === 'string' && item.text.trim() && Array.isArray(item.before) && /^(unknown|sent|failed)$/.test(item.status);
       }).map(function (item) { return Object.assign({}, item, { before: new Set(item.before), node: null }); });
       state.notice = state.outgoing.some(function (item) { return item.status === 'unknown'; })
         ? '\u0412\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d \u0442\u0435\u043a\u0441\u0442 \u0441 \u043d\u0435\u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u043d\u043e\u0439 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u043e\u0439. \u041f\u0440\u043e\u0432\u0435\u0440\u044c \u043f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0443 \u043f\u0435\u0440\u0435\u0434 \u043f\u043e\u0432\u0442\u043e\u0440\u043e\u043c.' : '';
@@ -664,18 +671,15 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       var pending = state.pending;
       if (pending && pending.form === form) {
         pending.nativeIssued = true;
-        try {
-          var actual = adapter.flushToTextarea(); event.formData.set(textarea.name || 'req_message', actual);
-          if (state.draft !== actual) { state.draft = actual; draftRevision++; }
-          pending.draft = actual; pending.revision = draftRevision;
-          if (pending.optimistic) { pending.optimistic.text = actual; var bubble = pending.optimistic.node && $('.rpmc-pending-text', pending.optimistic.node); if (bubble) bubble.textContent = actual; }
-          if (pending.button && pending.button.name && !event.formData.has(pending.button.name)) event.formData.set(pending.button.name, pending.button.value);
-          saveDraftNow();
-        } catch (error) { setStatus(error.message, true); }
+        // Submit listeners can clear or reset the visible editor. The exact
+        // text captured at submit is the only text owned by this operation.
+        event.formData.set(textarea.name || 'req_message', pending.draft);
+        if (pending.button && pending.button.name && !event.formData.has(pending.button.name)) event.formData.set(pending.button.name, pending.button.value);
         return;
       }
       var text;
       try { text = adapter.flushToTextarea(); } catch (error) { setStatus(error.message, true); return; }
+      if (!text.trim()) { setStatus('Напиши сообщение перед отправкой.', true); return; }
       event.formData.set(textarea.name || 'req_message', text);
       var send = $$('input[type="submit"], button[type="submit"], button:not([type])', form).find(function (button) { return !isPreview(button); });
       if (send && send.name && !event.formData.has(send.name)) event.formData.set(send.name, send.value);
@@ -1661,7 +1665,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         if (stateScroll.lastAppend && Date.now() - stateScroll.lastAppend < 1500 && Math.abs(target - area.scrollTop) > 1) scrollMessagesToEnd(area, true);
         else if (stateScroll.animation == null) instantMessageScroll(stateScroll, target);
       }
-      else if (stateScroll.anchor && stateScroll.anchor.isConnected) {
+      else if (stateScroll.anchor && stateScroll.anchor.parentNode === area) {
         var top = area.getBoundingClientRect().top;
         instantMessageScroll(stateScroll, area.scrollTop + stateScroll.anchor.getBoundingClientRect().top - top - stateScroll.anchorTop);
       }
@@ -1710,7 +1714,8 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       '<div class="rpmc-messages" role="region" aria-label="\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f"></div>' +
       '<button class="rpmc-new-incoming" type="button" hidden>\u041d\u043e\u0432\u044b\u0435 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f \u2193</button>' +
       '<div class="rpmc-composer"></div>' +
-      '<div class="rpmc-status" role="status" aria-live="polite"></div></div>';
+      '<div class="rpmc-status" role="status" aria-live="polite"></div>' +
+      '<div class="rpmc-operations" aria-label="Сохранённые тексты отправки" hidden></div></div>';
     // Mount outside a native deletion form; nested forms break submission.
     var anchor = post.closest('form') || post;
     anchor.parentNode.insertBefore(chat, anchor);
@@ -1786,7 +1791,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         if (scrolling.animation == null) scrollMessagesToEnd(area, false);
       } else scrollMessagesToEnd(area, true);
     } else {
-      instantMessageScroll(scrolling, anchor && anchor.isConnected ? oldScroll + anchor.getBoundingClientRect().top - anchorTop : oldScroll);
+      instantMessageScroll(scrolling, anchor && anchor.parentNode === area ? oldScroll + anchor.getBoundingClientRect().top - anchorTop : oldScroll);
       scrolling.remember();
     }
   }
@@ -1942,7 +1947,9 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
   }
 
   function renderOutgoing(area, retained) {
+    var recovery = $('.rpmc-operations', state.chat), recovered = new Set();
     state.outgoing.forEach(function (item) {
+      if (!String(item.text || '').trim()) { if (item.node) item.node.remove(); return; }
       var row = item.node;
       if (!row) {
         row = document.createElement('div'); row.className = 'rpmc-row out rpmc-pending-row';
@@ -1971,9 +1978,23 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       row.setAttribute('data-delivery', item.status);
       $('.rpmc-delivery-state', row).textContent = item.status === 'sending' ? '\u041e\u0442\u043f\u0440\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f\u2026' : item.status === 'sent' ? '\u041e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e' :
         item.status === 'failed' ? '\u041d\u0435 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e' : '\u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 \u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u0435\u043d';
-      row.title = item.error || ''; retained.add(row);
-      if (row.parentNode !== area || area.lastElementChild !== row) area.appendChild(row);
+      row.title = item.error || '';
+      // Rejected/unconfirmed attempts are saved text, not conversation history.
+      // Keep recovery controls available below the composer without inventing
+      // messages that the forum did not acknowledge.
+      var recovering = /^(failed|unknown)$/.test(item.status);
+      var target = recovering ? recovery : area;
+      if (recovering && row.parentNode === area) {
+        var scrolling = messageScrollState(area);
+        if (scrolling.observer) scrolling.observer.unobserve(row);
+        scrolling.observed.delete(row);
+      }
+      row.classList.toggle('rpmc-operation-record', recovering);
+      if (recovering) recovered.add(row); else retained.add(row);
+      if (row.parentNode !== target || target.lastElementChild !== row) target.appendChild(row);
     });
+    Array.from(recovery.children).forEach(function (row) { if (!recovered.has(row)) row.remove(); });
+    recovery.hidden = !recovered.size;
   }
 
   function startOutgoing(pending) {
@@ -2217,6 +2238,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       // RusFF still requires a subject in the POST, but the chat does not need
       // a visible subject control. Keep it enabled and in its original form.
       field.type = 'hidden';
+      field.disabled = false;
       hideInlineField(field, textarea);
       if (field.id) $$('label[for]', form).forEach(function (label) {
         if (label.htmlFor === field.id && !label.contains(textarea) && !label.querySelector('#form-buttons, .form-buttons, [contenteditable]') &&
@@ -2225,6 +2247,40 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         }
       });
     });
+  }
+
+  function prepareNativeSend(form, textarea, sourceHref) {
+    var action = localUrl(form.getAttribute('action') || sourceHref, sourceHref);
+    if (!action || !/\/messages\.php$/i.test(action.pathname)) throw new Error('Некорректный адрес штатной формы отправки.');
+    var source = localUrl(sourceHref);
+    // The compose URL may identify the recipient even when the native action
+    // omits it. Preserve the action and all native token fields.
+    if (source && source.searchParams.has('uid') && !action.searchParams.has('uid')) action.searchParams.set('uid', source.searchParams.get('uid'));
+    form.action = action.href;
+    var sent = $('input[name="form_sent"]', form);
+    if (!sent) { sent = form.ownerDocument.createElement('input'); sent.type = 'hidden'; sent.name = 'form_sent'; form.appendChild(sent); }
+    sent.value = '1';
+    sent.disabled = false;
+    var username = $('input[name="req_username"]', form);
+    if (username && !username.value.trim() && state.partner && !/^Собеседник(?: #\d+)?$/i.test(state.partner.name)) username.value = state.partner.name;
+    if (!textarea.name) textarea.name = 'req_message';
+    if (!$('input[name="req_subject"], input[name="subject"], input[name="req_title"]', form)) {
+      var subject = form.ownerDocument.createElement('input'); subject.type = 'hidden'; subject.name = 'req_subject'; form.appendChild(subject);
+    }
+    prepareSubject(form, textarea);
+    return action;
+  }
+
+  function serverSendError(error) {
+    if (Array.isArray(error)) return error.map(serverSendError).filter(Boolean).join(' ').slice(0, 500);
+    if (typeof error === 'string' || typeof error === 'number') {
+      var node = new DOMParser().parseFromString(String(error), 'text/html');
+      return normalizeText(node.body.textContent).slice(0, 500);
+    }
+    if (error && typeof error === 'object') {
+      return serverSendError(error.message || error.description || error.reason || error.error || error.errors);
+    }
+    return '';
   }
 
   function frameBusy(frame, busy) {
@@ -2306,8 +2362,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     quietEditorFrame(frame.contentWindow, doc);
     var found = postForm(doc); if (!found) return false;
     var form = found.form, textarea = found.textarea;
-    var action = localUrl(form.getAttribute('action') || frame.contentWindow.location.href, frame.contentWindow.location.href);
-    if (!action || !/\/messages\.php$/i.test(action.pathname)) return false;
+    var action = prepareNativeSend(form, textarea, frame.contentWindow.location.href);
     clearTimeout(frame._rpmcLoadTimer);
     if (form._rpmcInstalled) { frameBusy(frame, false); fitFrame(frame, doc); return true; }
     form._rpmcInstalled = true; form.classList.add('rpmc-native-form');
@@ -2337,6 +2392,7 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       var text;
       try { text = adapter.flushToTextarea(); }
       catch (error) { event.preventDefault(); event.stopImmediatePropagation(); setStatus(error.message, true); return; }
+      if (!text.trim()) { event.preventDefault(); event.stopImmediatePropagation(); setStatus('Напиши сообщение перед отправкой.', true); return; }
       if (state.draft !== text) { state.draft = text; draftRevision++; }
       var submitter = event.submitter || lastClicked; lastClicked = null;
       prepareSubject(form, textarea);
@@ -2416,6 +2472,15 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     if (!pending || /^(confirmed|rejected)$/.test(pending.stage)) return;
     var active = state.pending === pending;
     captureDraft();
+    // Native submit handlers may clear their editor before the server responds.
+    // Restore the submitted snapshot on failure, while preserving newer text.
+    if (!success && active && !state.draft.trim() && pending.draft.trim()) {
+      try {
+        if (!pending.adapter.getDraft().trim()) {
+          pending.adapter.setDraft(pending.draft); state.draft = pending.draft; draftRevision++;
+        }
+      } catch (_) { /* The saved operation remains available for copying. */ }
+    }
     pending.stage = success ? 'confirmed' : uncertain ? 'unknown' : 'rejected';
     if (pending.optimistic) {
       pending.optimistic.status = success ? 'sent' : uncertain ? 'unknown' : 'failed';
@@ -2464,7 +2529,8 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
       var confirmed = explicitSendSuccess(doc), result;
       // Parse JSON if the native forum returns it; do not assume JSON support.
       try { result = JSON.parse(doc.body.textContent); } catch (_) {}
-      if (result && result.error) { completeSend(pending, false, '\u0424\u043e\u0440\u0443\u043c \u043e\u0442\u043a\u043b\u043e\u043d\u0438\u043b \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0443. \u041f\u0440\u043e\u0432\u0435\u0440\u044c \u0442\u0435\u043a\u0441\u0442 \u0438 \u0442\u0435\u043c\u0443.', false); return; }
+      var rejection = result && (result.error || result.response && result.response.error);
+      if (rejection) { completeSend(pending, false, serverSendError(rejection) || 'Форум отклонил отправку.', false); return; }
       var id = result && result.response && Number(result.response.id);
       if (Number.isSafeInteger(id) && id > 0) { pending.serverId = id; confirmed = true; }
       if (confirmed) {
@@ -2582,24 +2648,19 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         }
         var form = found.form, textarea = found.textarea;
         try {
-          var username = form.elements && form.elements.req_username;
-          if (username) username.value = state.partner && state.partner.name || username.value || '';
-          var subject = form.querySelector('input[name="req_subject"], input[name="subject"], input[name="req_title"]');
-          if (subject) {
-            var value = state.subject || cleanSubject(subject.value) || 'Переписка';
-            var limit = Number(subject.getAttribute('maxlength'));
-            subject.value = limit > 0 ? value.slice(0, limit) : value;
-          }
+          var action = prepareNativeSend(form, textarea, url.href);
           editorAdapter(receiver, textarea).setDraft(pending.draft);
-          editorAdapter(receiver, textarea).flushToTextarea();
+          textarea.value = pending.draft;
           textarea.dispatchEvent(new receiver.contentWindow.Event('input', { bubbles: true }));
           var submit = $$('input[type="submit"], button[type="submit"], button:not([type])', form).find(function (button) { return !isPreview(button); });
           if (!submit) { failBeforePost('В штатной форме не найдена кнопка отправки.'); return; }
-          var action = localUrl(form.getAttribute('action') || url.href, url.href);
-          if (!action || !/\/messages\.php$/i.test(action.pathname)) { failBeforePost('Некорректный адрес отправки.'); return; }
           action.searchParams.set('format', 'json');
           form.setAttribute('action', action.href);
           form.target = '_self';
+          form.addEventListener('formdata', function (event) {
+            event.formData.set(textarea.name, pending.draft);
+            if (submit.name && !event.formData.has(submit.name)) event.formData.set(submit.name, submit.value || submit.textContent || '');
+          });
           phase = 'submitted';
           pending.nativeIssued = true;
           submit.click();
@@ -2666,8 +2727,8 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     if (form._rpmcInstalled) return true; form._rpmcInstalled = true;
     form.classList.add('rpmc-native-inline', 'rpmc-native-form');
     form.id = 'post';
-    var inlineAction = localUrl(form.getAttribute('action') || href, href);
-    if (!inlineAction || !/\/messages\.php$/i.test(inlineAction.pathname)) return false;
+    var inlineAction;
+    try { inlineAction = prepareNativeSend(form, textarea, href); } catch (_) { return false; }
     inlineAction.searchParams.set('format', 'json'); form.action = inlineAction.href;
     form.target = ensureSendFrame().name;
     form.method = 'post';
@@ -2680,7 +2741,6 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
     textarea.setAttribute('placeholder', 'Написать сообщение…');
     textarea.classList.add('rpmc-inline-textarea');
     var username = form.querySelector('input[name="req_username"]');
-    if (username && state.partner) username.value = state.partner.name || username.value || '';
     hideInlineField(username, textarea);
     prepareSubject(form, textarea);
     
@@ -3176,6 +3236,11 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
         display: flex; align-items: center; gap: 9px; padding: 11px 15px; background: #c4d8d4; font-weight: 600;
       }
       #resonance-pm-chat .rpmc-status.error { padding: 11px 15px; color: #8b3838; background: #eedbda; }
+      #resonance-pm-chat .rpmc-operations { padding: 8px 15px; border-top: 1px solid #71939144; }
+      #resonance-pm-chat .rpmc-operations[hidden] { display: none; }
+      #resonance-pm-chat .rpmc-operation-record { justify-content: flex-start; margin: 5px 0; }
+      #resonance-pm-chat .rpmc-operation-record .rpmc-bubble { background: #ffffff80; color: #315f62; }
+      #resonance-pm-chat .rpmc-operation-copy { display: block; width: 100%; box-sizing: border-box; min-height: 75px; margin-top: 6px; }
       #resonance-pm-chat .rpmc-pending-text { white-space: pre-wrap; opacity: .86; }
       #resonance-pm-chat .rpmc-delivery-state {
         display: flex; align-items: center; gap: 6px; margin: 6px 3px 3px; font: 600 11px/1.4 sans-serif; color: #315f62;
