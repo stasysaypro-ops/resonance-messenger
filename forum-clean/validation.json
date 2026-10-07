@@ -1,0 +1,33 @@
+{
+  "base": "first supplied test version",
+  "original_script_blocks_preserved": 89,
+  "working_only_additional_blocks": 19,
+  "credential_placeholders": [
+    {
+      "file": "01-html-top.txt",
+      "setting": "PR_PASSWORD",
+      "count": 1
+    },
+    {
+      "file": "01-html-top.txt",
+      "setting": "NOTIFY_CLIENT_SECRET",
+      "count": 1
+    },
+    {
+      "file": "02-html-bottom.txt",
+      "setting": "IMAGEBAN_TOKEN",
+      "count": 1
+    }
+  ],
+  "inline_blocks_compiled_before_redaction": 61,
+  "local_checks_passed_before_redaction": 14,
+  "live_forum_verified": false,
+  "external_scripts_executed": false,
+  "files_sha256": {
+    "03-html-reply.txt": "57b876570dec70870464f4c3ae7c9d2629882c977e0cb3513f42e37bb4c78a9b",
+    "04-css-main.txt": "0208da76a0bc4f4a4ae5a6701d1e0dadec83a83391c5473cc8d150724da3d4f1",
+    "01-html-top.txt": "ab53f0c8eb252985bdb4576667cac52ca8c7bcbb8aebbd04835578279f3f5619",
+    "02-html-bottom.txt": "af83022deae23d6089ba535a39277485e4c6b9dbe875d129e14722176f334d58",
+    "05-css-extra.txt": "1d5e755b0e96b8fd3ecfd9aac91fe347a83f26f51f25174d4e3d24223bd8123f"
+  }
+}

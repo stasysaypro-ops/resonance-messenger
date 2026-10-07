@@ -1,0 +1,397 @@
+<div class="header_wrapper">
+<ul id="stylelist"></ul>
+<div class="ghost-gif"></div>
+<div class="human-gif"></div>
+
+<div class="header_activ">
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+</div>
+
+<div class="header_writers">
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+<a href="ссылка" title="текст"><img src="https://forumstatic.ru/files/001c/cb/a9/40210.png?v=1"></a>
+</div>
+
+<div class="header_post">
+<a href="ссылка" class="header_post-author">Name Surname</a>
+<p>
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus
+</p>
+<a href="ссылка" class="header_post-link">читать дальше</a>
+</div>
+
+<div class="header_episode">
+<span><a href="ссылка">название эпизода</a></span>
+<span><a href="ссылка">альбедо</a> и <a href="ссылка">странник</a></span>
+</div>
+
+<a href="ссылка" title="Имя"  class="head-ams1"></a>
+<a href="ссылка" title="Имя"  class="head-ams2"></a>
+<a href="ссылка" title="Имя"  class="head-ams3"></a>
+
+<div class="battle-link" title="Баттлы"></div>
+<div class="header-battle_container">
+	<div class="battle-item">OBLIVION <count>000</count></div>
+	<div class="battle-item">LIBERATION<count>000</count></div>
+	<div class="battle-item">STILLNESS<count>000</count></div>
+</div>
+
+<a href="ссылка" class="daily-link" title="Дейлики"></a>
+<a href="ссылка" class="shop-link" title="Магазин"></a>
+
+<div class="header-navigation">
+<span class="header-navigation_toggle">навигация</span>
+	<div class="header-navigation_clip">
+		<div class="header-navigation_panel">
+			<a href="ссылка">текст ссылки</a>
+			<a href="ссылка">текст ссылки</a>
+			<a href="ссылка">текст ссылки</a>
+			<a href="ссылка">текст ссылки</a>
+			<a href="ссылка">текст ссылки</a>
+		</div>
+	</div>
+</div>
+
+<div class="header-episodes">
+
+	<span class="header-episodes_toggle"></span>
+
+	<div class="header-episodes_panel">
+
+		<div class="header-episodes_item">
+			<time>00.00</time>
+			<a href="ссылка">название эпизода</a>
+			<span>• name surname</span>
+		</div>
+
+		<div class="header-episodes_item">
+			<time>00.00</time>
+			<a href="ссылка">название эпизода</a>
+			<span>• name surname</span>
+		</div>
+
+		<div class="header-episodes_item">
+			<time>00.00</time>
+			<a href="ссылка">название какого-то длиннное невероятно длинное да</a>
+			<span>• name surnamович длиннее</span>
+		</div>
+
+		<div class="header-episodes_item">
+			<time>00.00</time>
+			<a href="ссылка">название какого-то длиннное невероятно длинное да</a>
+			<span>• name surnamович длиннее</span>
+		</div>
+
+		<div class="header-episodes_item">
+			<time>00.00</time>
+			<a href="ссылка">название какого-то длиннное невероятно длинное да</a>
+			<span>• name surnamович длиннее</span>
+		</div>
+
+	</div>
+</div>
+<!-- музыка -->
+<div class="audio-wrapper">
+
+	<audio class="player__audio" preload="metadata"></audio>
+
+	<div class="player-controls">
+
+		<button class="play" type="button" aria-label="воспроизвести">
+			<i class="music-icon icon-play"></i>
+		</button>
+
+		<button class="backward" type="button" aria-label="предыдущий трек">
+			<i class="music-icon icon-backward"></i>
+		</button>
+
+		<button class="forward" type="button" aria-label="следующий трек">
+			<i class="music-icon icon-forward"></i>
+		</button>
+
+	</div>
+
+</div>
+<!-- музыка -->
+</div>
+<div class="header_banners--wrapper">
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+<a href="ссылка">
+<div><em>21.09</em><span>новость новость</span></div>
+инфа про новость
+</a>
+</div>
+
+<script>
+document.querySelectorAll('.header_banners--wrapper').forEach(function(wrapper) {
+	let targetScroll = wrapper.scrollLeft;
+	let currentScroll = wrapper.scrollLeft;
+	let animationFrame = null;
+
+	function updateFade() {
+		const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+		const scrollLeft = wrapper.scrollLeft;
+
+		wrapper.classList.remove('is-middle', 'is-end', 'no-scroll');
+
+		if (maxScroll <= 1) {
+			wrapper.classList.add('no-scroll');
+			return;
+		}
+
+		if (scrollLeft >= maxScroll - 1) {
+			wrapper.classList.add('is-end');
+			return;
+		}
+
+		if (scrollLeft > 1) wrapper.classList.add('is-middle');
+	}
+
+	function animateScroll() {
+		currentScroll += (targetScroll - currentScroll) * 0.12;
+		wrapper.scrollLeft = currentScroll;
+		updateFade();
+
+		if (Math.abs(targetScroll - currentScroll) > 0.5) {
+			animationFrame = requestAnimationFrame(animateScroll);
+		} else {
+			currentScroll = targetScroll;
+			wrapper.scrollLeft = targetScroll;
+			updateFade();
+			animationFrame = null;
+		}
+	}
+
+	wrapper.addEventListener('wheel', function(e) {
+		const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+		if (maxScroll <= 0) return;
+
+		e.preventDefault();
+		targetScroll += e.deltaY;
+		targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+		if (!animationFrame) {
+			currentScroll = wrapper.scrollLeft;
+			animationFrame = requestAnimationFrame(animateScroll);
+		}
+	}, { passive: false });
+
+	wrapper.addEventListener('scroll', updateFade, { passive: true });
+	window.addEventListener('resize', updateFade);
+
+	updateFade();
+});
+</script>
+
+<script>
+$(window).on('load scroll',function(){
+    if ($(this).scrollTop() >= '45') {
+        $('#pun-navlinks').addClass("fixed");
+    }
+    else  {$('#pun-navlinks').removeClass("fixed");}
+});
+</script>
+
+<!-- Прокрутка баннеров: используется одна версия из первого тестовика. -->
+
+<div class="settings_wrap">
+<div class="slide_button" title="Дизайн и шрифт в постах"></div>
+<div class="slide_block"><div class="settings_container">
+<!-- Регулятор вида и размера шрифта (с) satsana, forumd.ru -->
+<div id="chfont">
+<div id="chfontbut">Шрифт в постах</div>
+<select id="chfontfam" name="chfontfam">
+<option value="0">по умолчанию</option>
+<option value="'Book Antiqua', 'Palatino Linotype', Palatino, serif" style="font-family: 'Book Antiqua', 'Palatino Linotype', Palatino, serif">Book Antiqua</option>
+<option value="Georgia, serif" style="font-family: Georgia, serif">Georgia</option>
+<option value="'Times New Roman', Times, serif" style="font-family: 'Times New Roman', Times, serif">Times New Roman</option>
+<option value="'Verdana', serif" style="font-family: 'Verdana', serif">Verdana</option>
+<option value="'Alegreya Sans SC', serif" style="font-family: 'Alegreya Sans SC', serif">Alegreya Sans SC</option>
+</select>
+<div id="chfontsize">
+<div class="fsizeplus"></div>
+<div class="fsize"></div>
+<div class="fsizeminus"></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+var chfsize,chffam;if(!localStorage.fontsize)localStorage.setItem("fontsize",12);if(!localStorage.fontfam)localStorage.setItem("fontfam","0");chfsize=+localStorage.getItem("fontsize");chffam=localStorage.getItem("fontfam");function setfsize(f){localStorage.setItem("fontsize",f);$(".fsize").text(f);$(".post-content p, textarea").css("font-size",f+"px")}
+function setffam(f){localStorage.setItem("fontfam",f);$("#chfontfam option").removeAttr("selected");$('#chfontfam option[value="'+f+'"]').attr("selected","selected");if(f!="0")$(".post-content p").css("font-family",f);else $(".post-content p").css("font-family","")}$(".fsizeplus").on("click",function(){chfsize+=1;if(chfsize>72)chfsize=72;setfsize(chfsize)});$(".fsizeminus").on("click",function(){chfsize-=1;if(chfsize<6)chfsize=6;setfsize(chfsize)});$("#chfontbut").on("click",function(){$("#chfont").toggleClass("active")});
+$("#chfontfam").on("change",function(){chffam=$(this).val();setffam(chffam)});$(document).pun_mainReady(function(){setfsize(chfsize);setffam(chffam)});
+</script><!-- Регулятор вида и размера шрифта (с) satsana, forumd.ru (конец) -->
+
+<!-------------------------- ВОССТАНОВЛЕНИЕ ПОСЛЕДНЕГО ПОСТА ПРИ УТЕРЕ © Человек-Шаман ------>
+<script>
+$(document).ready(function() {
+  $('#addition-area').append(function() {
+    return $('<div>Восстановить последний пост</div>').click(restoreLastPost);
+  });
+  function restoreLastPost() {
+    $('#main-reply').val(localStorage.ReservePost);
+  };
+});
+</script>
+
+<!--------------------------------------------------------- ПОДНЯТИЕ РЕПУТАЦИИ В ЗАКРЫТЫХ ТЕМАХ ------>
+<script type="text/javascript">
+if($('pun-viewtopic').length)function changeVisibility(b){$('#'+b).toggle(); return};
+</script>
+
+
+<!--------------------------------------------------- ВЫРАВНИВАНИЕ ПО ШИРИНЕ ----------------------------->
+<script type="text/javascript">
+$(document).ready(function(){
+$("#post #button-center").after('<td id=button-justify align=center valign=center><img onclick="bbcode(\'[align=justify]\',\'[/align]\')" src="/i/blank.gif"/></td>');});
+</script>
+
+
+<!--кнопки вверх вниз-->
+<div class="arrow_wrap">
+<div class="go-up" id='ToTop'><span><img src="https://forumstatic.ru/files/001c/c7/d4/14935.svg"></span></div>
+<div class="go-down" id='OnBottom'><span><img src="https://forumstatic.ru/files/001c/c7/d4/17277.svg"></span></div>
+</div>
+
+<!-- Пиар-вход v.2 © Alex_63 -->
+<script src="https://forumstatic.ru/files/0015/c4/3f/26781.js"></script>
+<script type="text/javascript">
+PR.nick = 'elsewhere';
+PR.pass = '__PR_PASSWORD__';
+PR.btn_text = 'Реклама';
+PR.set();
+</script>
+
+<!-- Смена аватара в топике (в HTML верх) © Deff, Alex_63 -->
+<script type="text/javascript" src="https://forumstatic.ru/files/0015/c4/3f/67169.js"></script>
+
+<!--Всплывающие Подсказки при наведении-->
+<style>
+#tooltip {
+  position: absolute;
+    background: var(--beg100);
+  z-index: 999;
+  max-width: 180px;
+  border-radius: 10px;
+  font-family: var(--font); /* шрифт */
+  font-size: 11px; /* размер текста */
+  display: none;
+  color: var(--text1); /* цвет текста */
+  text-align: center;
+  padding: 3px 10px;
+  letter-spacing: 0px;
+  font-weight: 300;
+border: 1px solid var(--borders);
+}
+</style>
+<script type="text/javascript" src="https://forumstatic.ru/files/0015/c4/3f/26671.js"></script>
+<!--//End//-Всплывающие Подсказки при наведении-->
+
+<script>
+FORUM.set('editor.addition.tags.hideprofile',{name:'Скрыть минипрофиль',onclick:function(){insert('[hideprofile]');}});
+$().pun_mainReady(function(){$('.post:contains("[hideprofile]")').addClass('hideprofile').html(function(){return $(this).html().replace(/\[hideprofile\]/gim,'')})});
+</script>
+
+<!------------------------------------------ ОТКЛЮЧЕНИЕ ФУНКЦИЙ И КНОПОК ------------------------------->
+<!--Отключить кнопку "Жалоба" -->
+<script type="text/javascript">
+RusffCore.sets.show_reportBtn = 0;
+</script>
+<!--Отключить функцию "Поделиться" -->
+<script type="text/javascript">
+RusffCore.sets.share = false;
+</script>
+<!--Отключить функцию "Вложения" -->
+<script type="text/javascript">
+RusffCore.sets.files.button = false;
+</script>
+<!--Отключить функцию "Это интересно" -->
+<script type="text/javascript">
+rusffLive.enable = false;
+</script>
+<!--Отключить функцию "Реакция" -->
+<!-- Настройки реакций — как в первом тестовике; отдельное отключение из других комплектов не перенесено. -->
+<!--Список просматривающих тему -->
+<script>
+RusffCore.sets.realtimeTopicReaders = false
+</script>
+
+<!-- Смена стиля, (с) ForumD.ru, satsana-->
+<script type="text/javascript">
+var styleList = [{
+    class: 'light',
+    name: 'Светлый стиль'
+},  {
+    class: 'dark',
+    name: 'Темный стиль'
+}];
+
+function getCookie(a){return(a=document.cookie.match(new RegExp("(?:^|; )"+a.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g,"\\$1")+"=([^;]*)")))?decodeURIComponent(a[1]):void 0}function setStyle(a){$("body").attr("class",a);$("#stylelist li").removeClass("active");$('#stylelist li[data="'+a+'"]').addClass("active");selStyle=a;document.cookie="selStyle="+a+"; max-age=2592000"}var selStyle=getCookie("selStyle");selStyle&&setStyle(selStyle);
+$(document).pun_mainReady(function(){$("#stylelist").length||$("body").prepend('<ul id="stylelist"></ul>');for(i=0;i<styleList.length;i++)$("#stylelist").append('<li data="'+styleList[i]["class"]+'"'+(selStyle==styleList[i]["class"]?' class="active"':"")+'><a href="/" onclick="setStyle($(this.parentNode).attr(\'data\'));return false">'+styleList[i].name+"</a></li>")});
+</script> <!-- Смена стиля - END -->
+
+<!--// Быстроплюсы v.2 РЕНО by Deff //-->
+<script type="text/javascript" src="https://forumstatic.ru/files/0012/d8/04/58219.js" addComment="1"></script>
+
+<!--личная страница часть 1 -->
+<script src="https://forumstatic.ru/files/0011/e9/e1/56920.js" type="text/javascript"></script>
+
+<!-- Быстрая правка: первый тестовик -->
+<script src="https://notahub.ru/distrib/utils/nc-quick-edit.js?v=1"></script>
+
+<!-- notifications | legume -->
+<script>
+RusffCore.sets.notifications = false;
+</script>
+<link defer rel="stylesheet" href="https://notahub.ru/market-notify/css/notify.css?v=1">
+<link defer rel="stylesheet" href="https://notahub.ru/market-notify/css/resonance-theme.css?v=1">
+<script>
+window.NOTIFY_HUB_CONFIG = {
+    prefix: 'resonance',
+    clientSecret: '__NOTIFY_CLIENT_SECRET__',
+    apiUrl: 'https://notahub.ru/market-notify/notify.php',
+    wsUrl: 'wss://notahub.ru/connection/websocket'
+};
+</script>
+<script defer src="https://notahub.ru/market-notify/js/notify.js?v=1"></script>
+
+
+<!-- сетка эстетики с редактором -->
+<script src="https://forumstatic.ru/files/001c/cd/71/21557.js?v=3"></script>

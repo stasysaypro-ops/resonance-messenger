@@ -1,0 +1,139 @@
+<!-- кубики | legume -->
+<link rel="stylesheet" href="https://notahub.ru/distrib/_local/homebear/rs-dice.css?v=2">
+<script defer src="https://notahub.ru/distrib/_local/homebear/rs-dice.js?v=1"></script>
+
+
+<!-- быстрые операции с валютой v2 | legume -->
+<link rel="stylesheet" href="https://notahub.ru/distrib/database/nota/personal/nc-quick-balance.css">
+<script>
+  window.QB_CONFIG = {
+    topics: [40, 45, 46, 29, 7, 15, 14, 36],       // id тем, где показывать кнопку
+    currencyField: "fld2",      // поле профиля с валютой
+    currencyName: "деньги",      // название валюты в поле суммы
+    signature: "админ",         // подпись по умолчанию
+    signatures: {                // своя подпись админа по его user_id
+      6: "диана",
+      3:   "оски",
+      4:   "кейн"
+    }
+  };
+</script>
+<script src="https://notahub.ru/distrib/database/nota/personal/nc-quick-balance2.js"></script>
+
+
+
+<!-- Всплывающая кнопка цитирования © Alex_63, 2025 -->
+<link rel="stylesheet" type="text/css" href="//forumstatic.ru/f/dev/mybb/bubble.css" />
+<script type="text/javascript" src="//forumstatic.ru/f/dev/mybb/bubble.js?9"></script>
+
+<!------------------------------------- ЗАМЕНА ИКОНОК (с) ForumD.ru, Герда ------------------------->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+#form-buttons tr {
+    display: block;
+    background: var(--bg-cat);
+    margin: 0px 0px !important;
+    margin-left: 15px !important;
+    text-align: center;
+}
+
+#form-buttons td img {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+}
+
+#form-buttons td {
+    background-image: none !important;
+    display: inline-block;
+    position: relative;
+    width: 26px;
+    height: 26px;
+    margin: 0 2px 5px;
+}
+
+#form-buttons td .material-icons {
+    z-index: 1;
+    left: 0;
+    font-size: 20px;
+    padding: 6px 0px;
+    opacity: 0.5;
+    color: var(--cl);
+}
+
+#form-buttons td:hover {background-color: none;}
+#form-buttons td:hover .material-icons {opacity: 1;}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#button-font").append('<i class="material-icons">font_download</i>');
+    $("#button-size").append('<i class="material-icons">format_size</i>');
+    $("#button-bold").append('<i class="material-icons">format_bold</i>');
+    $("#button-italic").append('<i class="material-icons">format_italic</i>');
+    $("#button-underline").append('<i class="material-icons">format_underlined</i>');
+    $("#button-strike").append('<i class="material-icons">strikethrough_s</i>');
+    $("#button-left").append('<i class="material-icons">format_align_left</i>');
+    $("#button-center").append('<i class="material-icons">format_align_center</i>');
+    $("#button-right").append('<i class="material-icons">format_align_right</i>');
+    $("#button-link").append('<i class="material-icons">link</i>');
+    $("#button-spoiler").append('<i class="material-icons">present_to_all</i>');
+    $("#button-image").append('<i class="material-icons">add_photo_alternate</i>');
+    $("#button-image2").append('<i class="material-icons">collections</i>');
+    $("#button-video").append('<i class="material-icons">ondemand_video</i>');
+    $("#button-hide").append('<i class="material-icons">lock_open</i>');
+    $("#button-quote").append('<i class="material-icons">format_quote</i>');
+    $("#button-code").append('<i class="material-icons">code</i>');
+    $("#button-color").append('<i class="material-icons">color_lens</i>');
+    $("#button-table").append('<i class="material-icons">table_view</i>');
+    $("#button-smile").append('<i class="material-icons">mood</i>');
+    $("#button-keyboard").append('<i class="material-icons">keyboard</i>');
+    $("#button-addition").append('<i class="material-icons">add_circle</i>');
+    $("#button-transL").append('<i class="material-icons">autorenew</i>');
+    $("#button-graffiti_rusff").append('<i class="material-icons">brush</i>');
+    $("#button-ChangeСase").append('<i class="material-icons">text_rotation_none</i>');
+    $("#button-indent").append('<i class="material-icons">format_indent_increase</i>');
+    $("#button-dice").append('<i class="material-icons">casino</i>');
+
+    setTimeout(() => $("#button-html").append('<i class="material-icons">html_rounded</i>'), 400);
+    setTimeout(() => $("#button-justify").append('<i class="material-icons">format_align_justify</i>'), 400);
+    setTimeout(() => $("#button-sticker").append('<i class="material-icons">emoji_emotions</i>'), 400);
+    setTimeout(() => $("#button-mask").append('<i class="material-icons">person</i>'), 400);
+    setTimeout(() => $("#floatbut").append('<i class="material-icons">waves</i>'), 400);
+});
+</script>
+
+<!-- КНОПКА «СКРЫТЬ ПРОФИЛЬ» — ОДНА РАБОЧАЯ КОПИЯ -->
+<script>
+(function () {
+    function addHideProfileButton() {
+        const buttonsRow = document.querySelector('#form-buttons tr');
+        if (!buttonsRow) return;
+
+        // Если кнопка уже есть, повторно ее не создаем.
+        if (document.getElementById('button-hideprofile')) return;
+
+        const td = document.createElement('td');
+        td.id = 'button-hideprofile';
+        td.title = 'Скрыть профиль';
+
+        const img = document.createElement('img');
+        img.src = '/i/blank.gif';
+        img.onclick = function () {
+            if (typeof bbcode === 'function') {
+                bbcode('[hideprofile]', '');
+            }
+        };
+
+        td.appendChild(img);
+        buttonsRow.appendChild(td);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', addHideProfileButton);
+    } else {
+        addHideProfileButton();
+    }
+})();
+</script>
