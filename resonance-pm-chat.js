@@ -2211,13 +2211,19 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
   }
   function prepareSubject(form, textarea) {
     $$('input[name="req_subject"], input[name="subject"], input[name="req_title"]', form).forEach(function (field) {
-      if (field._rpmcSubjectReady) { var bound = Number(field.getAttribute('maxlength')); if (bound > 0) field.value = field.value.slice(0, bound); return; }
-      field._rpmcSubjectReady = true;
-      var subject = state.subject || cleanSubject(field.value) || '\u041f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0430';
+      var subject = cleanSubject(state.subject || field.value) || '\u041f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0430';
       var limit = Number(field.getAttribute('maxlength'));
       field.value = limit > 0 ? subject.slice(0, limit) : subject;
-      // Keep the subject accessible: hidden validation errors cannot be fixed.
-      field.addEventListener('input', function () { state.subject = field.value; });
+      // RusFF still requires a subject in the POST, but the chat does not need
+      // a visible subject control. Keep it enabled and in its original form.
+      field.type = 'hidden';
+      hideInlineField(field, textarea);
+      if (field.id) $$('label[for]', form).forEach(function (label) {
+        if (label.htmlFor === field.id && !label.contains(textarea) && !label.querySelector('#form-buttons, .form-buttons, [contenteditable]') &&
+            !$$('input:not([type="hidden"]), button, select, textarea', label).some(function (control) { return control !== field; })) {
+          label.style.setProperty('display', 'none', 'important');
+        }
+      });
     });
   }
 
@@ -2648,8 +2654,10 @@ function a(e,t){return n(e)||r(e,t)||o(e,t)||i()}function o(e,n){if(e){if(typeof
   function hideInlineField(field, textarea) {
     if (!field) return;
     var holder = field.closest('label, p, .inputfield, .txtfield, .field, .sf-set, .df-set, li, tr');
-    if (holder && !holder.contains(textarea) && !holder.querySelector('#form-buttons') && !holder.querySelector('.form-buttons')) {
+    if (holder && !holder.contains(textarea) && !holder.querySelector('#form-buttons, .form-buttons, [contenteditable]') &&
+        !$$('input:not([type="hidden"]), button, select, textarea', holder).some(function (control) { return control !== field; })) {
       holder.classList.add('rpmc-inline-hidden-field');
+      holder.style.setProperty('display', 'none', 'important');
     } else field.classList.add('rpmc-inline-hidden-field');
   }
 
