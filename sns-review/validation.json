@@ -1,0 +1,20 @@
+{
+  "fixture_messages": 100,
+  "original": {
+    "initial_palette_buttons": 3000,
+    "initial_message_handlers": 12400
+  },
+  "optimized": {
+    "initial_palette_buttons": 0,
+    "initial_message_handlers": 400
+  },
+  "checked": [
+    "full-script syntax",
+    "palette opens",
+    "palette closes",
+    "reopening does not duplicate choices",
+    "switching palettes closes previous",
+    "reaction selection renders chip and initiates storage.set"
+  ],
+  "browser_performance_profile": false
+}

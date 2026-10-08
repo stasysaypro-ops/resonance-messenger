@@ -1,0 +1,54 @@
+--- a/sns.js
++++ b/sns.js
+@@ -1,4 +1,4 @@
+-/* SNS CHAT v2.41 OPTIMIZED | RESONANCE / RusFF | Forum ID: 4 | UTF-8 */
++/* SNS CHAT v2.41 + lazy reaction palettes | RESONANCE / RusFF | Forum ID: 4 | UTF-8 */
+ (function(window, document) {
+   "use strict";
+   if (!/\/viewtopic\.php$/i.test(window.location.pathname) || window.__SNS_V241_BOOT__) return;
+@@ -3079,20 +3079,24 @@
+           $control.empty();
+           var $add = $('<button type="button" class="sns-reaction-add" ' + 'title="\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0440\u0435\u0430\u043a\u0446\u0438\u044e" aria-label="\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0440\u0435\u0430\u043a\u0446\u0438\u044e"></button>').html(reactionAddSvg());
+           var $picker = $('<div class="sns-reaction-picker-custom"></div>');
+-          PALETTE.forEach(function(emoji) {
+-            var $choice = $('<button type="button" class="sns-reaction-choice"></button>').attr("data-reaction", emoji).toggleClass("is-current", mine.indexOf(emoji) !== -1).text(emoji);
+-            bindStopPropagation($choice);
+-            $choice.on("click.snsCustomReactions", function(event) {
+-              event.preventDefault();
+-              event.stopPropagation();
+-              var selectedEmoji = String($(this).attr("data-reaction") || "");
+-              $(this).closest(".sns-reaction-picker-custom").removeClass("is-open");
+-              if (PALETTE.indexOf(selectedEmoji) !== -1) {
+-                setReaction($(this).closest(".sns-message"), selectedEmoji);
+-              }
++          // Build this palette only when its owner opens it.
++          function populatePicker() {
++            if ($picker.children().length) return;
++            PALETTE.forEach(function(emoji) {
++              var $choice = $('<button type="button" class="sns-reaction-choice"></button>').attr("data-reaction", emoji).toggleClass("is-current", mine.indexOf(emoji) !== -1).text(emoji);
++              bindStopPropagation($choice);
++              $choice.on("click.snsCustomReactions", function(event) {
++                event.preventDefault();
++                event.stopPropagation();
++                var selectedEmoji = String($(this).attr("data-reaction") || "");
++                $(this).closest(".sns-reaction-picker-custom").removeClass("is-open");
++                if (PALETTE.indexOf(selectedEmoji) !== -1) {
++                  setReaction($(this).closest(".sns-message"), selectedEmoji);
++                }
++              });
++              $picker.append($choice);
+             });
+-            $picker.append($choice);
+-          });
++          }
+           var $error = $('<div class="sns-reaction-error"></div>');
+           bindStopPropagation($add);
+           $add.on("click.snsCustomReactions", function(event) {
+@@ -3100,6 +3104,7 @@
+             event.stopPropagation();
+             var $ownPicker = $(this).siblings(".sns-reaction-picker-custom");
+             $(".sns-reaction-picker-custom").not($ownPicker).removeClass("is-open");
++            if (!$ownPicker.hasClass("is-open")) populatePicker();
+             $ownPicker.toggleClass("is-open");
+           });
+           $control.append($add, $picker, $error);
