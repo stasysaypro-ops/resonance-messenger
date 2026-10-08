@@ -16,5 +16,7 @@
     "switching palettes closes previous",
     "reaction selection renders chip and initiates storage.set"
   ],
-  "browser_performance_profile": false
+  "browser_performance_profile": false,
+  "optimized_script_sha256": "ef2800cffabc8febe9f68a08ecd9b14c6c1a6c764bb6776f1e1d0ea3af0fcd95",
+  "patch_application_verified": true
 }
